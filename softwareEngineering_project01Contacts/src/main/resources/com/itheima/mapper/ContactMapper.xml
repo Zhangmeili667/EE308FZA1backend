@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.itheima.mapper.ContactMapper">
+<!--    根据姓名查询ID-->
+    <select id="searchByName" resultType="com.itheima.pojo.Contact">
+        select id,name,number,gender,create_time,update_time from contacts
+        <where>
+            <if test="name!=null">
+                name like concat('%',#{name},'%')
+            </if>
+            <if test="gender!=null">
+                and gender =#{gender}
+            </if>
+        </where>
+    </select>
+
+
+
+
+<!--    <select id="searchByName" resultType="com.itheima.pojo.Contact">-->
+<!--        select id,name,number,gender,create_time,update_time from contacts-->
+<!--        <where>-->
+<!--            <choose>-->
+<!--                <when test="name!=null and gender!=null">-->
+<!--                    name like concat('%',#{name},'%') and gender =#{gender}-->
+<!--                </when>-->
+<!--                <when test="name!=null">-->
+<!--                    name like concat('%',#{name},'%')-->
+<!--                </when>-->
+<!--                <when test="gender!=null">-->
+<!--                    gender =#{gender}-->
+<!--                </when>-->
+<!--                <otherwise>-->
+<!--                    1=1 &lt;!&ndash; 这是一个始终为真的条件，用于当没有任何条件时 &ndash;&gt;-->
+<!--                </otherwise>-->
+<!--            </choose>-->
+<!--        </where>-->
+<!--    </select>-->
+
+<!--    根据ID修改联系人-->
+    <update id="update">
+        update contacts
+        <set>
+            <if test="name!=null">
+                name=#{name},
+            </if>
+            <if test="number!=null">
+                number=#{number},
+            </if>
+            <if test="gender!=null">
+                gender=#{gender},
+            </if>
+            <if test="updateTime!=null">
+                update_time=#{updateTime},
+            </if>
+        </set>
+        where id=#{id}
+
+    </update>
+<!--    //查询-->
+<!--    <select id="selectContact" resultType="com.itheima.pojo.Contact">-->
+<!--        select * from contacts-->
+<!--        <where>-->
+<!--            <if test = "name!=null">-->
+
+<!--            </if>-->
+<!--        </where>-->
+<!--    </select>-->
+
+<!--    //新建联系人-->
+<!--    <insert id="insertContact">-->
+<!--        insert into contacts(name,number,gender,creat_time,update_time)-->
+<!--        values (#{name},#{number},#{gender},#{createTime},#{updateTime});-->
+<!--    </insert>-->
+
+<!--&lt;!&ndash;    //修改联系人&ndash;&gt;-->
+<!--    <update id="updateContact">-->
+<!--        update contacts set name=#{name},-->
+<!--        number=#{number}, gender=#{gender},update_time=#updateTime where id=#{id};-->
+<!--    </update>-->
+
+<!--&lt;!&ndash;    //删除联系人&ndash;&gt;-->
+<!--    <delete id="deleteContact">-->
+<!--        delete from contacts where id= #{id}-->
+<!--    </delete>-->
+
+
+
+</mapper>
